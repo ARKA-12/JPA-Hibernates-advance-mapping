@@ -20,8 +20,40 @@ public class CruddemoApplication {
 	public CommandLineRunner commandLineRunner(AppDAO appDAO){
 		
 		return runner ->{
-			createInstructor(appDAO);
+			// createInstructor(appDAO);
+
+			//findInstructor(appDAO);
+
+			deleteInstructor(appDAO);
+
 		};
+
+
+	}
+
+	private void deleteInstructor(AppDAO appDAO) {
+		
+		int theId=1;
+
+		System.out.println("Delete Instructor Id: " + theId);
+		 appDAO.deleteInstructorById(theId); // we use cascadeType.ALL in instructor entity so it will delete both table data 
+
+		System.out.println("Done!");
+
+
+
+	}
+
+	private void findInstructor(AppDAO appDAO) {
+
+		int theId=1;
+		System.out.println("Finding Instructor ID: "+ theId);
+
+		Instructor tempInstructor = appDAO.findInstructorById(theId);
+
+		System.out.println("tempInstructor: "+ tempInstructor);
+		System.out.println("The associated instructor details only: " + tempInstructor.getInstructorDetail());
+
 
 	}
 
