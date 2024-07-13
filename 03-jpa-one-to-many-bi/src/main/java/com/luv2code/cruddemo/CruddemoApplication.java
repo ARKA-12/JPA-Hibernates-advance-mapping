@@ -1,5 +1,7 @@
 package com.luv2code.cruddemo;
 
+import java.util.List;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,10 +33,58 @@ public class CruddemoApplication {
 
 			 //deleteInstructorDetail(appDAO);
 
-			 createInstructorWithCourses(appDAO);
+			//  createInstructorWithCourses(appDAO);
+
+			// findInstructorWithCourses(appDAO);
+
+			findCoursesForInstructor(appDAO);
 
 		};
 
+
+	}
+
+private void findCoursesForInstructor(AppDAO appDAO) {
+	int theId = 7;
+
+		System.out.println("Finding Instructor id: " +theId);
+		Instructor tempInstructor = appDAO.findInstructorById(theId);//only load the instructor not couses because couses are LAZY loading
+		System.out.println();
+
+		System.out.println("tempInstructor: "+tempInstructor);
+		System.out.println();
+
+		//find trhe couses for Instructor
+
+		System.out.println("Finding vouses for Instructor ID:  "+ theId);
+
+		List<Course> courses = appDAO.findCoursesByInstructorId(theId);
+
+		//associate the objects
+
+		tempInstructor.setCourses(courses);
+		System.err.println();
+	
+		System.out.println("THE associated courses: "+ tempInstructor.getCourses());
+		System.out.println();
+		System.out.println("DONE!!!");
+
+	}
+
+	private void findInstructorWithCourses(AppDAO appDAO) {
+		
+		int theId=7;
+
+		System.out.println("Finding Instructor id: " +theId);
+		Instructor tempInstructor = appDAO.findInstructorById(theId);//only load the instructor not couses because couses are LAZY loading
+		System.out.println();
+
+		System.out.println("tempInstructor: "+tempInstructor);
+		System.out.println();
+
+		System.out.println("The associated couses : "+ tempInstructor.getCourses());
+		System.out.println();
+		System.out.println("Done!!");
 
 	}
 
