@@ -97,4 +97,20 @@ public class AppDAOImp implements AppDAO{
 
     }
 
+    @Override
+    public Instructor findInstructorByIdJoinFetch(int theId) {
+        //create the query
+        //***be sure to add white space before double quotes***
+        //this code will retreive the instructor and courses
+        //The JOIN FETCH is similar to EAGER loding
+        TypedQuery<Instructor> query = entityManager.createQuery("select i from Instructor i "+"JOIN FETCH i.courses "+"JOIN FETCH i.instructorDetail "+ "where i.id = :data",Instructor.class);
+
+        query.setParameter("data",theId);
+
+        Instructor tempInstructor = query.getSingleResult();
+
+        return tempInstructor;
+
+    }
+
 }
