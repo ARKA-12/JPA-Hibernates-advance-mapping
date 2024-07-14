@@ -22,26 +22,87 @@ public class CruddemoApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(AppDAO appDAO){
 		
-		return runner ->{
-			//createInstructor(appDAO);
+		return new CommandLineRunner() {
+                    @Override
+                    public void run(String[] runner) throws Exception {
+                        //createInstructor(appDAO);
+                        
+                        //findInstructor(appDAO);
+                        
+                        //deleteInstructor(appDAO);
+                        
+                        // findInstructorDetail(appDAO);
+                        
+                        //deleteInstructorDetail(appDAO);
+                        
+                        //  createInstructorWithCourses(appDAO);
+                        
+                        // findInstructorWithCourses(appDAO);
+                        
+                        // findCoursesForInstructor(appDAO);
+                        
+                        // findInstuctorWithCoursesJoinFetch(appDAO);
+                        
+                        // updateInstructor(appDAO);
+                        
+                        // updateCourse(appDAO);
 
-			//findInstructor(appDAO);
+						// deleteInstructor(appDAO);
 
-			//deleteInstructor(appDAO);
+						deleteCouse(appDAO);
+                    }
 
-			// findInstructorDetail(appDAO);
+					private void deleteCouse(AppDAO appDAO) {
+						
+						int theId=1;
 
-			 //deleteInstructorDetail(appDAO);
+						System.out.println("deleting couseId: "+ theId);
 
-			//  createInstructorWithCourses(appDAO);
+						appDAO.deleteCourseById(theId);
 
-			// findInstructorWithCourses(appDAO);
+						System.out.println("Done!!");
 
-			// findCoursesForInstructor(appDAO);
+					}
 
-			findInstuctorWithCoursesJoinFetch(appDAO);
+					private void updateCourse(AppDAO appDAO) {
+						
+						int theId=3;
 
-		};
+						System.out.println("Find the course id: "+ theId);
+						Course tempCourse = appDAO.findCouseById(theId);
+
+						//update the course
+						System.out.println("Update the course id: "+ theId);
+
+						tempCourse.setTitle("Human Ethics");
+
+						appDAO.update(tempCourse);
+
+						System.out.println("DONE!!");
+					}
+                };
+
+
+	}
+
+private void updateInstructor(AppDAO appDAO) {
+		
+		int theId = 7;
+
+		//find the Instructor
+
+		System.out.println("Finding the instructor id: "+theId);
+		Instructor tempInstructor = appDAO.findInstructorById(theId);
+
+		//update the data in istructor
+		System.out.println("Update the instructor id: "+theId);
+		tempInstructor.setLastName("Maity");
+
+		appDAO.update(tempInstructor);
+
+		System.out.println("DONE!!");
+
+		
 
 
 	}
@@ -172,7 +233,7 @@ private void findCoursesForInstructor(AppDAO appDAO) {
 
 	private void deleteInstructor(AppDAO appDAO) {
 		
-		int theId=1;
+		int theId=7;
 
 		System.out.println("Delete Instructor Id: " + theId);
 		 appDAO.deleteInstructorById(theId); // we use cascadeType.ALL in instructor entity so it will delete both table data 

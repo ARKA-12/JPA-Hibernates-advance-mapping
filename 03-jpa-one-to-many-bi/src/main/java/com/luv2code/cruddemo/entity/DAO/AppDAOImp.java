@@ -47,6 +47,14 @@ public class AppDAOImp implements AppDAO{
         //retriving the id to delete
         Instructor theInstructor = entityManager.find(Instructor.class, theId);
 
+        //get the courses
+        List<Course> courses = theInstructor.getCourses();
+
+        //break the associattion of all courses for the instructor
+        for(Course tempCourse: courses){
+            tempCourse.setInstructor(null); //remove the instructor from the courses
+        }
+
         //delete the retrive Id
 
         entityManager.remove(theInstructor);
@@ -111,6 +119,38 @@ public class AppDAOImp implements AppDAO{
 
         return tempInstructor;
 
+    }
+
+    @Override
+    @Transactional
+    public Instructor update(Instructor tempInstructor) {
+        
+       return entityManager.merge(tempInstructor); //updating the instructor
+
+    }
+
+    @Override
+    @Transactional
+    public void update(Course tempCourse) {
+       
+        entityManager.merge(tempCourse);
+    }
+
+    @Override
+    
+    public Course findCouseById(int theId) {
+        
+        Course tempCourse = entityManager.find(Course.class, theId);
+        return tempCourse;
+    }
+
+    @Override
+    @Transactional
+    public void deleteCourseById(int theId) {
+        
+        Course tempCourse = entityManager.find(Course.class, theId);
+
+        entityManager.remove(tempCourse);
     }
 
 }
