@@ -11,6 +11,7 @@ import com.luv2code.cruddemo.entity.Course;
 import com.luv2code.cruddemo.entity.DAO.AppDAO;
 import com.luv2code.cruddemo.entity.Instructor;
 import com.luv2code.cruddemo.entity.InstructorDetail;
+import com.luv2code.cruddemo.entity.Review;
 
 @SpringBootApplication
 public class CruddemoApplication {
@@ -21,36 +22,71 @@ public class CruddemoApplication {
 
 	@Bean
 	public CommandLineRunner commandLineRunner(AppDAO appDAO){
+
+		return runner -> {
+
+			// createCourseAndReviews(appDAO);
+			
+			// retriveCouseAndReviews(appDAO);
+
+			deleteCourseAndReviews(appDAO);
+
+		};
+	}
 		
-		return new CommandLineRunner() {
-                    @Override
-                    public void run(String[] runner) throws Exception {
-                        //createInstructor(appDAO);
-                        
-                        //findInstructor(appDAO);
-                        
-                        //deleteInstructor(appDAO);
-                        
-                        // findInstructorDetail(appDAO);
-                        
-                        //deleteInstructorDetail(appDAO);
-                        
-                        //  createInstructorWithCourses(appDAO);
-                        
-                        // findInstructorWithCourses(appDAO);
-                        
-                        // findCoursesForInstructor(appDAO);
-                        
-                        // findInstuctorWithCoursesJoinFetch(appDAO);
-                        
-                        // updateInstructor(appDAO);
-                        
-                        // updateCourse(appDAO);
+	
 
-						// deleteInstructor(appDAO);
+					private void deleteCourseAndReviews(AppDAO appDAO) {
+						int theId = 10;
 
-						deleteCouse(appDAO);
-                    }
+						System.out.println("Deleting Course id: "+ theId);
+						appDAO.deleteCourseById(theId);
+
+						System.out.println("done!!!");
+	}
+
+					private void retriveCouseAndReviews(AppDAO appDAO) {
+	
+						//get the course and reviews
+
+						int theId = 10;
+
+						Course tempCourse = appDAO.findCourseAndRerviewsByCourseId(theId);
+
+						//print the course
+
+						System.out.println(tempCourse);
+
+						//print the review
+						System.out.println(tempCourse.getReviews());
+					
+	}
+
+					private void createCourseAndReviews(AppDAO appDAO) {
+		
+						//creare a course
+
+						Course tempCourse = new Course("PacMan- how to score 1 Million");
+
+						//add reviews
+
+					tempCourse.addReview(new Review("good job my friend!!!"));
+					tempCourse.addReview(new Review("yo yo boyy"));
+					tempCourse.addReview(new Review("very bad course i don't like it"));
+
+						//save the course
+						System.out.println("save the Courses......");
+						
+
+						System.out.println("tempCourse: " +tempCourse);
+						System.out.println();
+						System.out.println("Reviews: "+ tempCourse.getReviews());
+
+					
+
+						appDAO.save(tempCourse);
+						System.out.println("done!!");
+	}
 
 					private void deleteCouse(AppDAO appDAO) {
 						
@@ -80,10 +116,10 @@ public class CruddemoApplication {
 
 						System.out.println("DONE!!");
 					}
-                };
+                
 
 
-	}
+	
 
 private void updateInstructor(AppDAO appDAO) {
 		

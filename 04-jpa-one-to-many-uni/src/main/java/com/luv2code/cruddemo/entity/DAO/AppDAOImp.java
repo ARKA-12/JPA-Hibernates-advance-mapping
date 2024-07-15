@@ -153,4 +153,26 @@ public class AppDAOImp implements AppDAO{
         entityManager.remove(tempCourse);
     }
 
+    @Override
+    @Transactional
+    public void save(Course courses) {
+        
+        entityManager.persist(courses);
+
+    }
+
+    @Override
+    public Course findCourseAndRerviewsByCourseId(int theId) {
+        
+        //create query
+        TypedQuery<Course> query = entityManager.createQuery("select c from Course c "+ "JOIN FETCH c.reviews "+"where c.id =:data", Course.class);
+        //execute the query
+
+        query.setParameter("data", theId);
+
+        return query.getSingleResult();
+        
+
+    }
+
 }
